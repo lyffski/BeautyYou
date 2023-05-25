@@ -3,7 +3,6 @@ import client from "../../contentful.js";
 //@ts-ignore
 import Header from "../components/Header.tsx";
 //@ts-ignore
-import Test from "../components/Test.tsx";
 import Hero from "../components/Hero.tsx";
 //@ts-ignore
 import FeaturesSection from "../components/Features.tsx";

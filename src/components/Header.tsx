@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import OverlappingDiv from "./Overlapping";
+import Sidebar from "./Sidebar";
 
 const Header: React.FC = () => {
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
@@ -16,20 +17,19 @@ const Header: React.FC = () => {
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
-    const categoryPopupElement = categoryPopupRef.current;
-  
+    const sidebarElement = document.getElementById("mobile-menu-2");
+    const popupElement = document.getElementById("popup");
+
     if (
-      categoryPopupElement &&
-      !categoryPopupElement.contains(target) &&
-      burgerIconRef.current &&
-      !burgerIconRef.current.contains(target) &&
-      !target.classList.contains("category-popup")
+      sidebarElement &&
+      popupElement &&
+      sidebarElement.contains(target) &&
+      popupElement.contains(target) &&
+      burgerIconRef.current?.contains(target)
     ) {
-      setIsCategoryPopupOpen(false);
+      setIsCategoryPopupOpen(true);
     }
   };
-  
-  
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -38,7 +38,39 @@ const Header: React.FC = () => {
     };
   }, []);
 
+
+
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const prevScrollY = useRef(0);
+
+
  
+
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > prevScrollY.current) {
+        setIsHeaderVisible(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      prevScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   interface OverlappingDivProps {
     text: string;
     details: IDetails;
@@ -50,7 +82,6 @@ const Header: React.FC = () => {
     link2: string;
   }
 
-
   interface IDetails {
     details1: string;
     details2: string;
@@ -58,23 +89,16 @@ const Header: React.FC = () => {
 
   const detailObj: IDetails = {
     details1: "Details 1",
-    details2: "Details 2"
+    details2: "Details 2",
   };
 
   const linkObj: ILinks = {
     link1: "Link 1",
-    link2: "Link 2"
-  }
-
-    
-
-
-
-  
-
+    link2: "Link 2",
+  };
 
   return (
-    <header>
+    <header className={`sticky top-0 transition-opacity duration-300 ${isHeaderVisible ? "opacity-100" : "opacity-0"}`}>
       <nav className="bg-indigo-50 border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="./index.html" className="flex items-center">
@@ -131,6 +155,7 @@ const Header: React.FC = () => {
               </li>
             </ul>
           </div>
+          
 
           <div className="flex items-center lg:order-2">
             <a
@@ -180,119 +205,23 @@ const Header: React.FC = () => {
               </svg>
             </button>
           </div>
-
-          {/* Layer */}
-          <div
-            className={`category-popup ${isCategoryPopupOpen ? "show" : ""}`}
-            id="mobile-menu-2"
-            ref={categoryPopupRef}
-            onClick={handleCategoryPopupClick}
-          >
-            <div className="flex flex-col ml-3">
-              <ul>
-              <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0 items-center"
-                  aria-current="page"
-                >
-                  <li>Home</li>
-                </a>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0 items-center"
-                  aria-current="page"
-                >
-                  <li>Stomach</li>
-                </a>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Hair
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Face
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Eyes
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Tooths
-                  </a>
-                </li>
-
-                <div className="breakline"></div>
-
-                {/*  sidebar */}
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Procedures
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 hover:text-blue-800 text-black rounded lg:bg-transparent lg:p-0"
-                    aria-current="page"
-                  >
-                    Packages
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
+        
+        {
+          <Sidebar
+            isCategoryPopupOpen={isCategoryPopupOpen}
+            categoryPopupRef={categoryPopupRef}
+            handleCategoryPopupClick={handleCategoryPopupClick}
+          />
+        }
 
         <div className="breakline"></div>
 
-        <div className="feature-categories">
-          <div className=" category-popup">
+        {/* <div className=" category-popup">
             <div className="popup">
               <div className="listPopup">
                 <ul className="listPopup ">
-                  <a href="./stomachReduction.html">Stomach</a>
+                  <a href="./stomachReduction.html">Stomachdd</a>
                 </ul>
                 <ul className="listPopup">
                   <a href="hair.html">Hair</a>
@@ -311,117 +240,29 @@ const Header: React.FC = () => {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          
+        <div className="feature-categories">
           <div className="category underneaht flex ">
-          <OverlappingDiv text={"Stomach"} details={detailObj} links={linkObj}/>
-          <OverlappingDiv text={"Hair"} details={detailObj} links={linkObj}/>
-          <OverlappingDiv text={"Face"} details={detailObj} links={linkObj}/>
-          <OverlappingDiv text={"Eyes"} details={detailObj} links={linkObj}/>
-          <OverlappingDiv text={"Tooths"} details={detailObj} links={linkObj}/>
-          <OverlappingDiv text={"About us"} details={detailObj} links={linkObj}/>
-    
-            {/* <h3 className="category-name">
-              <a href="/stomachReduction.html">Stomach</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Details 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div> */}
+            <OverlappingDiv
+              text={"Stomach"}
+              details={detailObj}
+              links={linkObj}
+            />
+            <OverlappingDiv text={"Hair"} details={detailObj} links={linkObj} />
+            <OverlappingDiv text={"Face"} details={detailObj} links={linkObj} />
+            <OverlappingDiv text={"Eyes"} details={detailObj} links={linkObj} />
+            <OverlappingDiv
+              text={"Tooths"}
+              details={detailObj}
+              links={linkObj}
+            />
+            <OverlappingDiv
+              text={"About us"}
+              details={detailObj}
+              links={linkObj}
+            />
           </div>
-
-          {/* <div className="category">
-            <h3 className="category-name">
-              <a href="/hair.html">Hair</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Details 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div>
-          </div> */}
-
-          {/* <div className="category">
-            <h3 className="category-name">
-              <a href="/face.html">Face</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Details 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div>
-          </div> */}
-
-         {/*  <div className="category">
-            <h3 className="category-name left">
-              <a href="">Eyes</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Detail 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div>
-          </div> */}
-
-          {/* <div className="category">
-            <h3 className="category-name">
-              <a href="/tooth.html">Tooth</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Details 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div>
-          </div> */}
-
-          {/* <div className="category">
-            <h3 className="category-name">
-              <a href="/aboutUs.html">About Us</a>
-            </h3>
-            <div className="category-details">
-              <ul>
-                <li>Details 1</li>
-                <li>Detail 2</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-                <li>Detail 3</li>
-              </ul>
-            </div>
-          </div> */}
         </div>
       </nav>
     </header>

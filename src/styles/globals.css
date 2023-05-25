@@ -169,10 +169,7 @@
   
 }
 
-.container:not(:hover) {
 
-  color: black;
-}
 
 .container:hover{
   transition: 1s ease-in-out;
@@ -199,8 +196,8 @@
   padding: 10px;
   margin-left: 10px;
   position: absolute;
-  border: 1px solid #1d4ed8; 
- border-top: none;
+  border: 1px dotted #1d4ed8; 
+  border-top: none;
  transition: 1s ease;
  color:#1d4ed8;
 }
@@ -218,6 +215,7 @@
   background-color: #eef2ff;
   z-index: 450;
   color:#1d4ed8;
+  text-align: center;
 }
 
 .overlapping-div.hovered:not(:hover) {

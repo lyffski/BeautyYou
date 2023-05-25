@@ -24,19 +24,42 @@
   cursor: pointer;
 }
 
+
+
 .category-popup {
   transition: transform 1s ease;
-  display: none;
   position: fixed;
   top: 0;
-  right: 0;
+  right: 200px;
   width: 70%;
   max-width: 300px;
   height: 100vh;
   background-color: #eef2ff;
-  transform: translateX(0%);
   z-index: 999;
   box-shadow: 10px 50px 40px #1d4ed8;
+}
+
+@media (max-width: 1008px) {
+  .burger-icon {
+    display: block;
+  }
+
+  .category {
+    display: none;
+  }
+
+  .category-popup {
+    transition: transform 1s ease;
+    position: fixed;
+    top: 0;
+    right: 300px;
+    width: 70%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: #eef2ff;
+    z-index: 999;
+    box-shadow: 10px 50px 40px #1d4ed8;
+  }
 }
 
 .burger-icon {
@@ -48,13 +71,14 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1008px) {
   .burger-icon {
     display: block;
   }
 
   .category {
     display: none;
+    
   }
 
   .category-popup {
@@ -74,6 +98,7 @@
 .breakline {
   border-bottom: 1px solid #1d4ed8;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .listPopup {
@@ -86,11 +111,7 @@
   margin-top: 20px;
 }
 
-ul:hover a {
-  color: #4473f4;
-  transition: 0.5s;
-  border-bottom: 1px solid #4473f4;
-}
+
 
 .category:hover .category-details {
   display: block;
@@ -138,4 +159,91 @@ ul:hover a {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  position: relative;
+  transition: 1s ease-in-out;
+
+  color: black;
+  
+}
+
+.container:not(:hover) {
+
+  color: black;
+}
+
+.container:hover{
+  transition: 1s ease-in-out;
+  background-color: #1d4ed8;
+  color:white;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.main-div {
+  width: 200px;
+  height: 25px;
+  position: relative;
+  z-index: 2;
+  transition:  1s ease;
+  padding-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+ 
+}
+
+.overlapping-div.hovered:hover{
+  padding: 10px;
+  margin-left: 10px;
+  position: absolute;
+  border: 1px solid #1d4ed8; 
+ border-top: none;
+ transition: 1s ease;
+ color:#1d4ed8;
+}
+
+.hovered,
+.overlapping-div.hovered {
+  z-index: 3;
+}
+
+.overlapping-div {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  background-color: #eef2ff;
+  z-index: 450;
+  color:#1d4ed8;
+}
+
+.overlapping-div.hovered:not(:hover) {
+  padding: 10px;
+  margin-left: 10px;
+  transition: 1s ease;
+  color: #1d4ed8;
+}
+
+.additional-info {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .container {
+    display: flex;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .underneaht {
+    display: flex;
+    flex-direction: column;
+  }
 }

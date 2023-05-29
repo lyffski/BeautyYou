@@ -14,11 +14,29 @@ function MyApp({ Component, pageProps }: AppProps) {
     i18n.changeLanguage(router.locale);
   }, [router.locale]);
 
+  const MyComponent = () => {
+    const [selectedLanguage, setSelectedLanguage] = useState(null);
+  
+    const handleClick = (language:any) => {
+      setSelectedLanguage(language);
+    };
+  };
 
 
 
   return (
       <div className="bg-indigo-50">
+      <div>
+      <ul className="flex justify-between">
+      <li>  
+        <a onClick={() => handleClick('de')}>de</a>
+      </li>
+      <li>
+        <a onClick={() => handleClick('eng')}>eng</a>
+      </li>
+    </ul>
+
+      </div>
     <I18nextProvider i18n={i18n}>
       <Component {...pageProps}  />
     </I18nextProvider>

@@ -8,6 +8,18 @@ import React, { useState } from 'react';
     details2: string;
   }
 
+  interface IDetailsFace {
+    details1: string;
+    details2: string;
+    details3: string;
+    details4: string;
+    details5: string;
+    details6: string;
+    details7: string;
+    details8: string;
+    details9: string;
+  }
+
   interface ILinks {
     link1: string;
     link2: string;
@@ -15,7 +27,7 @@ import React, { useState } from 'react';
   
   interface OverlappingDivProps {
     text: string;
-    details: IDetails;
+    details: IDetails|IDetailsFace;
     links: ILinks;
   }
 
@@ -39,6 +51,8 @@ const OverlappingDiv = ({ text, details, links }: OverlappingDivProps) => {
     setIsOverlappingHovered(false);
   };
 
+  
+
   return (
     <div className="container">
       <div
@@ -55,14 +69,16 @@ const OverlappingDiv = ({ text, details, links }: OverlappingDivProps) => {
           onMouseLeave={handleOverlappingMouseLeave}
         >
           <ul className="">
-            <a href={`#demo${links.link1}`}><li>{details.details1}</li></a>
-            <li>{details.details2}</li>
-            <li>Details</li>
-            <li>Details</li>
-            <li>Details</li>
-            <li>Details</li>
-            <li>Details</li>
-          </ul>
+            <a href={`#demo${links.link1}`}><li className="li-list">{details.details1}</li></a>
+            <a href={`#demo${links.link1}`}><li className="li-list">{details.details2}</li></a>
+            <li className="li-list">{details.details3}</li>
+            <li className="li-list">{details.details4}</li>
+            <li className="li-list">{details.details5}</li>
+            <li className="li-list">{details.details6}</li>
+            <li className="li-list">{details.details7}</li>
+            <li className="li-list">{details.details8}</li>
+            <li className="li-list">{details.details9}</li>
+          </ul>ö
         </div>
       )}
     </div>

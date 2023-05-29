@@ -4,8 +4,12 @@ import Sidebar from "./Sidebar";
 
 const Header: React.FC = () => {
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
+  const prevScrollY = useRef(0);
   const burgerIconRef = useRef<HTMLButtonElement>(null);
   const categoryPopupRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleBurgerIconClick = () => {
     setIsCategoryPopupOpen(!isCategoryPopupOpen);
@@ -40,12 +44,27 @@ const Header: React.FC = () => {
 
 
 
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const prevScrollY = useRef(0);
+  const handleScroll = () => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
 
+    setIsHeaderVisible(true);
 
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsHeaderVisible(false);
+    }, 10000);
+  };
  
-
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -56,20 +75,25 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > prevScrollY.current) {
-        setIsHeaderVisible(false);
-      } else {
-        setIsHeaderVisible(true);
-      }
-      prevScrollY.current = currentScrollY;
-    };
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > prevScrollY.current && !isHovering) {
+    setIsHeaderVisible(false);
+  } else if (currentScrollY < prevScrollY.current || isHovering) {
+    setIsHeaderVisible(true);
+  }
+
+  prevScrollY.current = currentScrollY;
+};
+
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isHovering]);
+
+
 
   interface OverlappingDivProps {
     text: string;
@@ -85,12 +109,38 @@ const Header: React.FC = () => {
   interface IDetails {
     details1: string;
     details2: string;
+    
+  }
+
+  interface IDetailsFace {
+    details1: string;
+    details2: string;
+    details3: string;
+    details4: string;
+    details5: string;
+    details6: string;
+    details7: string;
+    details8: string;
+    details9: string;
   }
 
   const detailObj: IDetails = {
-    details1: "Details 1",
-    details2: "Details 2",
+    details1: "Armstraffung",
+    details2: "Bauchdeckenstraffung",
   };
+
+  const detailObjFace: IDetailsFace = {
+    details1: "Armstraffung",
+    details2: "Bauchdeckenstraffung",
+    details3: "Bruststaffung",  
+    details4: "Brustvergrößerung",
+    details5: "Brustverkleinerung",
+    details6: "Augenlidkorrektur",
+    details7: "Facelift",
+    details8: "Nasenkorrektur",
+    details9: "Ohrenkorrektur",
+  };
+
 
   const linkObj: ILinks = {
     link1: "Link 1",
@@ -98,7 +148,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-0 transition-opacity duration-300 ${isHeaderVisible ? "opacity-100" : "opacity-0"}`}>
+      <header className={`sticky top-0 transition-opacity duration-300 z-50 ${isHeaderVisible ? "opacity-100" : "opacity-0"} bg-indigo-50 border-gray-200 px-4 lg:px-6 py-2.5`}>
       <nav className="bg-indigo-50 border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="./index.html" className="flex items-center">
@@ -250,7 +300,7 @@ const Header: React.FC = () => {
               links={linkObj}
             />
             <OverlappingDiv text={"Hair"} details={detailObj} links={linkObj} />
-            <OverlappingDiv text={"Face"} details={detailObj} links={linkObj} />
+            <OverlappingDiv text={"Face"} details={detailObjFace} links={linkObj} />
             <OverlappingDiv text={"Eyes"} details={detailObj} links={linkObj} />
             <OverlappingDiv
               text={"Tooths"}
@@ -266,6 +316,7 @@ const Header: React.FC = () => {
         </div>
       </nav>
     </header>
+
   );
 };
 

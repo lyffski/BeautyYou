@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from './Header';
 
 const Hero = () => {
   return (
     <div className="relative isolate px-6 pt-14 lg:px-8">
-      <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-40" aria-hidden="true"></div>
+      <div className="absolute -top-40 -z-20 transform-gpu overflow-hidden blur-3xl sm:-top-40" aria-hidden="true"></div>
       <div className="mx-auto max-w-2xl py-10 sm:py-12 lg:py-20">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Transform Your Look with Our All-Inclusive Plastic Surgery Packages in Turkey</h1>

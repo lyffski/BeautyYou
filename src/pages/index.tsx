@@ -15,12 +15,14 @@ import { useEffect } from "react";
 //@ts-ignore
 import { fetchTranslations } from "../utils/translation.ts";
 
+
 interface HomePageProps {
   props: any;
 }
 
 const HomePage = (props: HomePageProps) => {
   const { t, i18n } = useTranslation();
+  
 
   useEffect(() => {
     async function initializeTranslations() {

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 //@ts-ignore
-import { connectToDatabase } from '../../utils/db';
+import { connectToDatabase } from '../../utils/db.ts';
 import { Db } from 'mongodb';
 
 

@@ -2,7 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import OverlappingDiv from "./Overlapping";
 import Sidebar from "./Sidebar";
 
+// @ts-ignore
+import { useLanguageStore } from '../hooks/languageStore.ts';
+
+// @ts-ignore
+import { IDetailsWeightLoss, IDetailsHair, IDetailsPlasticSurgery, IDetailsDentistry, IDetailsAboutUs, dObjDentistry, dObjAboutUs, dObjHair, dObjPlasticSurgery, dObjWeigthLoss} from '../../types.ts'
+
+interface OverlappingDiv {
+  text: string;
+  details: IDetailsWeightLoss | IDetailsHair | IDetailsPlasticSurgery | IDetailsDentistry | IDetailsAboutUs;
+}
+
 const Header: React.FC = () => {
+  const selectedLanguage = useLanguageStore((state) => state.selectedLanguage);
+{selectedLanguage === "de" && <Header />}
+
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
@@ -94,64 +108,11 @@ const Header: React.FC = () => {
   }, [isHovering]);
 
 
-
-  interface OverlappingDivProps {
-    text: string;
-    details: IDetails;
-    links: ILinks;
-  }
-
-  interface ILinks {
-    link1: string;
-    link2: string;
-  }
-
-  interface IDetails {
-    details1: string;
-    details2: string;
-    
-  }
-
-  interface IDetailsFace {
-    details1: string;
-    details2: string;
-    details3: string;
-    details4: string;
-    details5: string;
-    details6: string;
-    details7: string;
-    details8: string;
-    details9: string;
-  }
-
-  const detailObj: IDetails = {
-    details1: "Armstraffung",
-    details2: "Bauchdeckenstraffung",
-  };
-
-  const detailObjFace: IDetailsFace = {
-    details1: "Armstraffung",
-    details2: "Bauchdeckenstraffung",
-    details3: "Bruststaffung",  
-    details4: "Brustvergrößerung",
-    details5: "Brustverkleinerung",
-    details6: "Augenlidkorrektur",
-    details7: "Facelift",
-    details8: "Nasenkorrektur",
-    details9: "Ohrenkorrektur",
-  };
-
-
-  const linkObj: ILinks = {
-    link1: "Link 1",
-    link2: "Link 2",
-  };
-
   return (
       <header className={`sticky top-0 transition-opacity duration-300 z-50 ${isHeaderVisible ? "opacity-100" : "opacity-0"} bg-indigo-50 border-gray-200 px-4 lg:px-6 py-2.5`}>
       <nav className="bg-indigo-50 border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <a href="./index.html" className="flex items-center">
+          <a href="../../" className="flex items-center">
             <span className="text-indigo-600 self-center text-xl font-semibold whitespace-nowrap">
               BeautyYou
             </span>
@@ -267,50 +228,25 @@ const Header: React.FC = () => {
 
         <div className="breakline"></div>
 
-        {/* <div className=" category-popup">
-            <div className="popup">
-              <div className="listPopup">
-                <ul className="listPopup ">
-                  <a href="./stomachReduction.html">Stomachdd</a>
-                </ul>
-                <ul className="listPopup">
-                  <a href="hair.html">Hair</a>
-                </ul>
-                <ul className="listPopup">
-                  <a href="./face.html">Face</a>
-                </ul>
-                <ul className="listPopup">
-                  <a href="./eye.html">Eyes</a>
-                </ul>
-                <ul className="listPopup">
-                  <a href="./tooth.html">Tooths</a>
-                </ul>
-                <ul className="listPopup">
-                  <a href="./aboutUs.html">About Us</a>
-                </ul>
-              </div>
-            </div>
-          </div> */}
 
         <div className="feature-categories">
           <div className="category underneaht flex ">
             <OverlappingDiv
-              text={"Stomach"}
-              details={detailObj}
-              links={linkObj}
+              text={"Weight Loss"}
+              details={dObjWeigthLoss}
             />
-            <OverlappingDiv text={"Hair"} details={detailObj} links={linkObj} />
-            <OverlappingDiv text={"Face"} details={detailObjFace} links={linkObj} />
-            <OverlappingDiv text={"Eyes"} details={detailObj} links={linkObj} />
+            <OverlappingDiv text={"Hair Transplant"} details={dObjHair}   />
+            {selectedLanguage === "de" && <OverlappingDiv text={"Plastic Surgery"} details={dObjPlasticSurgery}   />}
+            {selectedLanguage === "eng" && <OverlappingDiv text={"Plastic Surgery"} details={dObjPlasticSurgery}   />}
+            <OverlappingDiv text={"Laser Eye Surgery"} details={dObjAboutUs}   />
             <OverlappingDiv
-              text={"Tooths"}
-              details={detailObj}
-              links={linkObj}
+              text={"Dentistry"}
+              details={dObjDentistry}
+               
             />
             <OverlappingDiv
               text={"About us"}
-              details={detailObj}
-              links={linkObj}
+              details={dObjAboutUs}
             />
           </div>
         </div>

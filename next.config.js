@@ -23,7 +23,7 @@ module.exports = {
         domain: 'beautyyou.en',
         defaultLocale: 'en-US',
       }
-    ],
+      ],
   },
 };
 

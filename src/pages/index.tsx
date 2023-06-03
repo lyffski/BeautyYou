@@ -14,15 +14,23 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 //@ts-ignore
 import { fetchTranslations } from "../utils/translation.ts";
-
+//@ts-ignore
+import { useLanguageStore } from '../hooks/languageStore.ts';
+//@ts-ignore
+import FormComponent from "../components/FormComponent.tsx";
+//@ts-ignore
+import DataDisplay from "../components/DataDisplay.tsx";
 
 interface HomePageProps {
   props: any;
 }
 
-const HomePage = (props: HomePageProps) => {
-  const { t, i18n } = useTranslation();
+
+
+const HomePage = ({ props }: HomePageProps) => {
   
+ 
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     async function initializeTranslations() {
@@ -40,19 +48,15 @@ const HomePage = (props: HomePageProps) => {
   const changeLanguage = (language: any) => {
     i18n.changeLanguage(language);
   };
-
   console.log("k:", props);
   return (
     <div>
-      {/* <h1>{t("homePage.title")}</h1>
-      <p>{t("homePage.content")}</p>
-      <button onClick={() => changeLanguage("en")}>English</button>
-      <button onClick={() => changeLanguage("de")}>German</button> */}
-      <Header />
       <Hero />
       <FeaturesSection />
       <PricingSection />
       <FAQ />
+      <FormComponent />
+      <DataDisplay />
     </div>
   );
 };
@@ -61,11 +65,6 @@ export async function getStaticProps() {
   const response = await client.getEntries({
     content_type: "testTranslate",
   });
-
-  /* 
-    const res1 = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-    const res2 = await res1.json()
- */
 
   return {
     props: {

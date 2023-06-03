@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 //import './styles.css'; // Import your CSS file for styling
 
   
-
-//@ts-ignore
-const OverlappingDiv = ({ text, details }):IOverlappingDiv => {
+const OverlappingDiv = ({ text, details }:any) => {
   const [isMainHovered, setIsMainHovered] = useState(false);
   const [isOverlappingHovered, setIsOverlappingHovered] = useState(false);
 

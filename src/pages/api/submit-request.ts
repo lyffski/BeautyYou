@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+//@ts-ignore
 import { connectToDatabase } from '../../utils/db';
 import { Db } from 'mongodb';
 

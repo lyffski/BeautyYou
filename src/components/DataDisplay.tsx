@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { connectToDatabase } from '../utils/db';
-import { Db } from 'mongodb';
 
 const DataDisplay: React.FC = () => {
   const [data, setData] = useState<any[]>([]);

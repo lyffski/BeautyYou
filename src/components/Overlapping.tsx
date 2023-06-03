@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
   
 
-
+//@ts-ignore
 const OverlappingDiv = ({ text, details }):IOverlappingDiv => {
   const [isMainHovered, setIsMainHovered] = useState(false);
   const [isOverlappingHovered, setIsOverlappingHovered] = useState(false);

@@ -51,6 +51,7 @@ const HomePage = ({ props }: HomePageProps) => {
   console.log("k:", props);
   return (
     <div>
+      <Header /> 
       <Hero />
       <FeaturesSection />
       <PricingSection />

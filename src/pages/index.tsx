@@ -44,7 +44,7 @@ const HomePage = ({ props }: HomePageProps) => {
 
     initializeTranslations();
   }, [i18n.language]);
-
+  // iimpletn this
   const changeLanguage = (language: any) => {
     i18n.changeLanguage(language);
   };

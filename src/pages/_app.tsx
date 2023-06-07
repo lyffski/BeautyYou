@@ -31,10 +31,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className="bg-indigo-50">
-      <button onClick={() => changeLanguage('en')}>English</button>
+     {/*  <button onClick={() => changeLanguage('en')}>English</button>
       <button onClick={() => changeLanguage('de')}>German</button>
       console.log()
-      <Header />
+      <Header /> */}
       <I18nextProvider i18n={i18n}>
         <Component {...pageProps} selectedLanguage={selectedLanguage} />
       </I18nextProvider>
